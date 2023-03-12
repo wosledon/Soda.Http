@@ -16,5 +16,7 @@ public class SodaHttpOption : IOptions<SodaHttpOption>
         "*/*"
     };
 
+    public (string, string)[]? Headers { get; set; }
+
     public SodaHttpOption Value => this;
 }
