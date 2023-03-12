@@ -1,29 +1,18 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace Soda.Http.Extensions;
 
 public static class SodaHttpExtensions
 {
-    public static IServiceCollection AddSodaHttp(this IServiceCollection services, Action<SodaHttpOption> options)
+    public static IServiceCollection AddSodaHttp(this IServiceCollection services, Action<SodaHttpOption?> options)
     {
-        var option = new SodaHttpOption();
+        SodaHttpOption? option = null;
 
         options.Invoke(option);
 
+        if (option is not null) SodaLocator.Instance(option);
+
         return services;
     }
-}
-
-public class SodaLocator
-{
-    public static void Instance()
-    {
-    }
-}
-
-public class SodaHttpOption : IOptions<SodaHttpOption>
-{
-    public SodaHttpOption Value => this;
 }
