@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Soda.Http.Extensions;
 
@@ -16,6 +17,16 @@ internal class SodaLocator
         if (_option is null) _option = new();
 
         _option.AuthenticationHeaderValue = new System.Net.Http.Headers.AuthenticationHeaderValue(key, value);
+    }
+
+    internal static void InitHeader(string key, string value)
+    {
+        if (_option is null) _option = new();
+
+        var result = _option.Headers.ToList();
+        result.Add((key, value));
+
+        _option.Headers = result.ToArray();
     }
 
     internal static void AddSodaHttp(Action<SodaHttpOption?> options)

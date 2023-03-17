@@ -51,7 +51,13 @@ QSodaHttp.AddSodaHttp(opts =>
 有时需要全局配置 Authentication，如果在代码中请求中独立配置了 Authentication 则会覆盖全局 Authentication
 
 ```csharp
-SodaHttp.InitAuthentication("Bearer", "Values");
+QSodaHttp.InitAuthentication("Bearer", "Values");
+```
+
+如果你是塞到 Header 里的这种做法
+
+```csharp
+QSodaHttp.InitHeader("X-Ca-Key", "Values");
 ```
 
 ### 3 Http 请求
