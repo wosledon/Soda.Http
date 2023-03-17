@@ -8,10 +8,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Soda.Http.Exceptions;
+using Soda.Http.Extensions;
 
 namespace Soda.Http.Core
 {
-    public class SodaHttp
+    public partial class SodaHttp
     {
         private static readonly HttpClientHandler HttpClientHandler = new HttpClientHandler
         {
@@ -30,6 +31,8 @@ namespace Soda.Http.Core
             "text/plain",
             "*/*"
         };
+
+        private static SodaHttpOption? Option => SodaLocator.GetOption()?.Value;
 
         private static readonly string[] DefaultAcceptEncoding = { "gzip", "deflate" };
 
@@ -136,7 +139,7 @@ namespace Soda.Http.Core
             }
 
             var sc = new StringContent(body);
-            if (EnableCompress)
+            if ((Option?.EnableCompress ?? false) || EnableCompress)
             {
                 _httpContent = new CompressedContent(sc, CompressedContent.CompressionMethod.GZip);
                 sc.Headers.ContentEncoding.Add("gzip");
@@ -227,7 +230,9 @@ namespace Soda.Http.Core
                 return (T)Convert.ChangeType(str, typeof(T));
             }
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(str);
+            if (string.IsNullOrEmpty(str)) throw new InvalidOperationException("请求异常");
+
+            return str.ToObject<T>()!;
         }
 
         protected async Task<T> RequestAsync<T>(HttpMethod method)
@@ -260,7 +265,7 @@ namespace Soda.Http.Core
                         break;
                 }
 
-                foreach (var acc in _accept)
+                foreach (var acc in (Option?.Accept ?? _accept))
                 {
                     requestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acc));
                 }
@@ -272,20 +277,34 @@ namespace Soda.Http.Core
 
                 if (_authenticationHeaderValue != null)
                 {
+                    if (Option is not null && Option.AuthenticationHeaderValue is not null)
+                    {
+                        requestMessage.Headers.Authorization = Option.AuthenticationHeaderValue;
+                    }
+
                     requestMessage.Headers.Authorization = _authenticationHeaderValue;
                 }
 
                 if (_headers != null)
                 {
-                    foreach (var header in _headers.AllKeys)
+                    if (Option?.Headers is null)
                     {
-                        requestMessage.Headers.Add(header, _headers.Get(header));
+                        foreach (var header in _headers.AllKeys)
+                        {
+                            requestMessage.Headers.Add(header, _headers.Get(header));
+                        }
+                    }
+                    else
+                    {
+                        foreach (var header in Option.Headers)
+                        {
+                            requestMessage.Headers.Add(header.Item1, header.Item2);
+                        }
                     }
                 }
 
                 sw.Start();
-                HttpResponseMessage? res = null;
-                Task.Run(async () => res = await HttpClientInner.SendAsync(requestMessage)).Wait();
+                HttpResponseMessage? res = await HttpClientInner.SendAsync(requestMessage);
                 httpStatusCode = res!.StatusCode;
                 sw.Stop();
                 return res;

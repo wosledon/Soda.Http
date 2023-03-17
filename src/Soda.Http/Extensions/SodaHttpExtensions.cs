@@ -5,11 +5,11 @@ namespace Soda.Http.Extensions;
 
 public static class SodaHttpExtensions
 {
-    public static IServiceCollection AddSodaHttp(this IServiceCollection services, Action<SodaHttpOption?> options)
+    public static IServiceCollection AddSodaHttp(this IServiceCollection services, Action<SodaHttpOption> options)
     {
         SodaHttpOption? option = null;
 
-        options.Invoke(option);
+        options.Invoke(option ?? new());
 
         if (option is not null) SodaLocator.Instance(option);
 
