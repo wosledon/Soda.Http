@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Soda.Http.Extensions;
@@ -24,9 +25,19 @@ public static class CommonExtensions
         var sb = new StringBuilder();
         foreach (var kvp in dict)
         {
-            sb.Append($"&{kvp.Key}={kvp.Value}");
+            if (kvp.Value is Array array)
+            {
+                foreach (var item in array)
+                {
+                    sb.Append($"&{kvp.Key}[]={item}");
+                }
+            }
+            else
+            {
+                sb.Append($"&{kvp.Key}={kvp.Value}");
+            }
         }
 
-        return $"{url}?{sb.ToString().TrimStart('&')}";
+        return $"{url?.TrimEnd('/')}?{sb.ToString().TrimStart('&')}";
     }
 }

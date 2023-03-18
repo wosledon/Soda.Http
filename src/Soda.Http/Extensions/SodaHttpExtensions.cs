@@ -7,11 +7,11 @@ public static class SodaHttpExtensions
 {
     public static IServiceCollection AddSodaHttp(this IServiceCollection services, Action<SodaHttpOption> options)
     {
-        SodaHttpOption? option = null;
+        SodaHttpOption? option = new();
 
-        options.Invoke(option ?? new());
+        options.Invoke(option);
 
-        if (option is not null) SodaLocator.Instance(option);
+        SodaLocator.Instance(option);
 
         return services;
     }

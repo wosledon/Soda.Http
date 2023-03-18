@@ -14,14 +14,14 @@ internal class SodaLocator
 
     internal static void InitAuthentication(string key, string value)
     {
-        if (_option is null) _option = new();
+        _option ??= new();
 
         _option.AuthenticationHeaderValue = new System.Net.Http.Headers.AuthenticationHeaderValue(key, value);
     }
 
     internal static void InitHeader(string key, string value)
     {
-        if (_option is null) _option = new();
+        _option ??= new();
 
         var result = _option.Headers?.ToList();
         result?.Add((key, value));

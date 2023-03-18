@@ -228,7 +228,7 @@ namespace Soda.Http.Core
             return this;
         }
 
-        public T GetData<T>(HttpResponseMessage res)
+        public T? GetData<T>(HttpResponseMessage res)
         {
             string? str = null;
 
@@ -241,10 +241,10 @@ namespace Soda.Http.Core
 
             if (string.IsNullOrEmpty(str)) throw new InvalidOperationException("请求异常");
 
-            return str.ToObject<T>()!;
+            return str.ToObject<T>();
         }
 
-        protected async Task<T> RequestAsync<T>(HttpMethod method)
+        protected async Task<T?> RequestAsync<T>(HttpMethod method)
         {
             using var res = await GetOriginHttpResponse(method);
             return GetData<T>(res);
@@ -264,7 +264,7 @@ namespace Soda.Http.Core
             var realUrl = _params is null ? _url : _params.ToUrl(_url);
             try
             {
-                using var requestMessage = new HttpRequestMessage(method, _url)!;
+                using var requestMessage = new HttpRequestMessage(method, realUrl)!;
                 switch (method.Method)
                 {
                     case "PUT":
@@ -408,46 +408,46 @@ namespace Soda.Http.Core
         /// </summary>
         /// <typeparam name="T"> </typeparam>
         /// <returns> </returns>
-        public async Task<T> GetAsync<T>()
+        public async Task<T?> GetAsync<T>()
         {
             return await RequestAsync<T>(HttpMethod.Get);
         }
 
         [Obsolete("建议使用异步方法")]
-        public T Get<T>()
+        public T? Get<T>()
         {
             return GetAsync<T>().Result;
         }
 
-        public Task<T> PostAsync<T>()
+        public Task<T?> PostAsync<T>()
         {
             return RequestAsync<T>(HttpMethod.Post);
         }
 
         [Obsolete("建议使用异步方法")]
-        public T Post<T>()
+        public T? Post<T>()
         {
             return PostAsync<T>().Result;
         }
 
-        public Task<T> PutAsync<T>()
+        public Task<T?> PutAsync<T>()
         {
             return RequestAsync<T>(HttpMethod.Put);
         }
 
         [Obsolete("建议使用异步方法")]
-        public T Put<T>()
+        public T? Put<T>()
         {
             return PutAsync<T>().Result;
         }
 
-        public Task<T> DeleteAsync<T>()
+        public Task<T?> DeleteAsync<T>()
         {
             return RequestAsync<T>(HttpMethod.Delete);
         }
 
         [Obsolete("建议使用异步方法")]
-        public T Delete<T>()
+        public T? Delete<T>()
         {
             return DeleteAsync<T>().Result;
         }
