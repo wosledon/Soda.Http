@@ -23,10 +23,10 @@ internal class SodaLocator
     {
         if (_option is null) _option = new();
 
-        var result = _option.Headers.ToList();
-        result.Add((key, value));
+        var result = _option.Headers?.ToList();
+        result?.Add((key, value));
 
-        _option.Headers = result.ToArray();
+        _option.Headers = result?.Distinct().ToArray();
     }
 
     internal static void AddSodaHttp(Action<SodaHttpOption?> options)

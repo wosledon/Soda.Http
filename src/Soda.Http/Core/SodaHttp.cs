@@ -64,6 +64,8 @@ namespace Soda.Http.Core
         private string[] _accept;
         private AuthenticationHeaderValue? _authenticationHeaderValue;
 
+        private Dictionary<string, object?>? _params;
+
         protected SodaHttp()
         {
             _mediaType = DefaultMediaType;
@@ -123,6 +125,13 @@ namespace Soda.Http.Core
             }
 
             _url = url;
+            return this;
+        }
+
+        public SodaHttp Params(object parameters)
+        {
+            _params = parameters.GetParameters();
+
             return this;
         }
 
@@ -251,6 +260,8 @@ namespace Soda.Http.Core
         {
             HttpStatusCode httpStatusCode = HttpStatusCode.NotFound;
             var sw = new Stopwatch();
+
+            var realUrl = _params is null ? _url : _params.ToUrl(_url);
             try
             {
                 using var requestMessage = new HttpRequestMessage(method, _url)!;

@@ -33,5 +33,10 @@ namespace Soda.Http.Core
         {
             SodaLocator.AddSodaHttp(options);
         }
+
+        public static void InitHeader(string key, string value)
+        {
+            SodaLocator.InitHeader(key, value);
+        }
     }
 }

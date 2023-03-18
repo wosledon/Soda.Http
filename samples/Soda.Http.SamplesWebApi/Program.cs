@@ -12,21 +12,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSodaHttp(opts =>
-{
-    opts.BaseUrl = "http://localhost:8080/";
-    opts.Accept = new[]
-    {
-        "application/json",
-        "text/plain",
-        "*/*"
-    };
-    opts.EnableCompress = false;
-    opts.Headers = new[]{
-        ("X-Ca-Test", "key")
-    };
-});
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
