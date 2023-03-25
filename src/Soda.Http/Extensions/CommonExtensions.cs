@@ -29,7 +29,7 @@ public static class CommonExtensions
             {
                 foreach (var item in array)
                 {
-                    sb.Append($"&{kvp.Key}[]={item}");
+                    sb.Append($"&{kvp.Key}={item}");
                 }
             }
             else
