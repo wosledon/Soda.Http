@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -28,6 +29,13 @@ public static class CommonExtensions
             if (kvp.Value is Array array)
             {
                 foreach (var item in array)
+                {
+                    sb.Append($"&{kvp.Key}={item}");
+                }
+            }
+            else if (kvp.Value is IList)
+            {
+                foreach (var item in (IList)kvp.Value)
                 {
                     sb.Append($"&{kvp.Key}={item}");
                 }
