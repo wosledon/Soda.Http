@@ -34,9 +34,14 @@ namespace Soda.Http.Core
             SodaLocator.AddSodaHttp(options);
         }
 
-        public static void InitHeader(string key, string value)
+        public static void AddHeader(string key, string value)
         {
             SodaLocator.InitHeader(key, value);
+        }
+
+        public static async Task<T?> GetAsync<T>(string url)
+        {
+            return await Url(url).GetAsync<T>();
         }
     }
 }
