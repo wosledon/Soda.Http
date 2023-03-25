@@ -8,6 +8,8 @@
 
 预载配置并不是必须的，但是有助于我们进行一些通用基础设置，例如Headers、Accept、BaseUrl等等。
 
+配置`BaseUrl`之后，可以直接使用`QSodaHttp.Uri()`代替`QSodaHttp.Url()`，直接填写接口即可。
+
 在`AspNetCore`中：
 
 ```csharp

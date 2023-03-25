@@ -8,7 +8,8 @@
     <PackageProjectUrl>https://github.com/DonPangPang/Soda.Http</PackageProjectUrl>
     <PackageReadmeFile>README.MD</PackageReadmeFile>
     <RepositoryUrl>https://github.com/DonPangPang/Soda.Http</RepositoryUrl>
-    <Authors>PowersDon</Authors>
+    <Authors>Powers</Authors>
+	  <PackageDescription>HttpClient;HTTP request class library;</PackageDescription>
   </PropertyGroup>
 
   <ItemGroup>
