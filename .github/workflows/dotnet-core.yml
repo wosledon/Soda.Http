@@ -26,5 +26,5 @@ jobs:
     - name: Publish
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
-       PROJECT_FILE_PATH: src/Soda.Http.csproj
+       PROJECT_FILE_PATH: src/Soda.Http/Soda.Http.csproj
        NUGET_KEY: ${{secrets.NUGET}}
