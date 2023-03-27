@@ -394,6 +394,11 @@ namespace Soda.Http.Core
             return await GetOriginHttpResponse(HttpMethod.Delete);
         }
 
+        public async Task<HttpResponseMessage> PatchHttpResponseMessageAsync()
+        {
+            return await GetOriginHttpResponse(HttpMethod.Patch);
+        }
+
         /// <summary>
         /// 获取请求的 <see cref="HttpResponseMessage" /> 结果
         /// </summary>
@@ -417,6 +422,17 @@ namespace Soda.Http.Core
         public T? Get<T>()
         {
             return GetAsync<T>().Result;
+        }
+
+        public async Task<T?> PatchAsync<T>()
+        {
+            return await RequestAsync<T>(HttpMethod.Patch);
+        }
+
+        [Obsolete("建议使用异步方法")]
+        public T? Patch<T>()
+        {
+            return PatchAsync<T>().Result;
         }
 
         public Task<T?> PostAsync<T>()
