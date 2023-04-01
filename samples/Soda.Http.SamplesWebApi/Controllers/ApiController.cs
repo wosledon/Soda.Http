@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -81,6 +82,18 @@ namespace Soda.Http.SamplesWebApi.Controllers
 
         [HttpPut]
         public IActionResult PutResult([FromBody] TestParameter parameters)
+        {
+            return Success(parameters);
+        }
+
+        [HttpPatch]
+        public IActionResult Patch(string id)
+        {
+            return Success(id);
+        }
+
+        [HttpPatch]
+        public IActionResult PatchResult([FromBody] TestParameter parameters)
         {
             return Success(parameters);
         }

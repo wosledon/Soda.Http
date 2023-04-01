@@ -261,7 +261,7 @@ namespace Soda.Http.Core
             HttpStatusCode httpStatusCode = HttpStatusCode.NotFound;
             var sw = new Stopwatch();
 
-            var realUrl = _params is null ? _url : _params.ToUrl(_url);
+            var realUrl = Uri.EscapeUriString(_params is null ? _url : _params.ToUrl(_url));
             try
             {
                 using var requestMessage = new HttpRequestMessage(method, realUrl)!;
@@ -269,6 +269,7 @@ namespace Soda.Http.Core
                 {
                     case "PUT":
                     case "POST":
+                    case "PATCH":
                         if (_httpContent != null)
                         {
                             requestMessage.Content = _httpContent;

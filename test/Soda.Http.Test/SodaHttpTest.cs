@@ -114,5 +114,23 @@ namespace Soda.Http.Test
 
             _testOutputHelper.WriteLine(res?.ToJson());
         }
+
+        [Fact]
+        public async void Patch()
+        {
+            var res = await QSodaHttp.Uri("Patch").Params(new { Id = "123456" }).PatchAsync<object>();
+
+            _testOutputHelper.WriteLine(res?.ToJson());
+        }
+
+        [Fact]
+        public async void PatchResult()
+        {
+            var res = await QSodaHttp.Uri("PatchResult")
+                .Body(new { Id = "123456", Ids = new[] { "123", "456" } })
+                .PatchAsync<object>();
+
+            _testOutputHelper.WriteLine(res?.ToJson());
+        }
     }
 }

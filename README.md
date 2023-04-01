@@ -127,3 +127,13 @@ var res = await QSodaHttp.Uri("/Test/PutResult")
         .Body(new { Id = "123456", Ids = new[] { "123", "456" } })
         .PutAsync<object>();
 ```
+
+```csharp
+var res = await QSodaHttp.Uri("Patch").Params(new { Id = "123456" }).PatchAsync<object>();
+```
+
+```csharp
+var res = await QSodaHttp.Uri("PatchResult")
+        .Body(new { Id = "123456", Ids = new[] { "123", "456" } })
+        .PatchAsync<object>();
+```
