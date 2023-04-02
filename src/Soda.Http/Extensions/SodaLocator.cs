@@ -29,9 +29,9 @@ internal class SodaLocator
         _option.Headers = result?.Distinct().ToArray();
     }
 
-    internal static void AddSodaHttp(Action<SodaHttpOption?> options)
+    internal static void AddSodaHttp(Action<SodaHttpOption> options)
     {
-        SodaHttpOption? option = null;
+        SodaHttpOption option = new();
 
         options.Invoke(option);
 

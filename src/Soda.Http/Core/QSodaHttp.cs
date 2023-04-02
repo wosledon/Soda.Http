@@ -30,7 +30,7 @@ namespace Soda.Http.Core
             SodaLocator.InitAuthentication(key, value);
         }
 
-        public static void AddSodaHttp(Action<SodaHttpOption?> options)
+        public static void AddSodaHttp(Action<SodaHttpOption> options)
         {
             SodaLocator.AddSodaHttp(options);
         }
