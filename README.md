@@ -2,6 +2,8 @@
 
 基于`HttpClient`封装的 Http 请求库。**如果有什么好想法，可以提 Issue 或者 Pr。**
 
+* 2023/04/30 新增`Download/DownloadAsync`方法支持文件下载
+
 ## 用法
 
 ### 1 预载
@@ -136,4 +138,9 @@ var res = await QSodaHttp.Uri("Patch").Params(new { Id = "123456" }).PatchAsync<
 var res = await QSodaHttp.Uri("PatchResult")
         .Body(new { Id = "123456", Ids = new[] { "123", "456" } })
         .PatchAsync<object>();
+```
+
+```csharp
+var res = await QSodaHttp.Url("https://cdn.bootcdn.net/ajax/libs/react/18.2.0/cjs/react.development.js")
+        .DownloadAsync(filename: "react");
 ```

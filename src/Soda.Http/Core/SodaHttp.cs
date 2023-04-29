@@ -473,5 +473,47 @@ namespace Soda.Http.Core
         {
             return $"{_url}";
         }
+
+        /// <summary>
+        /// 下载文件
+        /// </summary>
+        /// <param name="path">保存路径</param>
+        /// <param name="filename">文件名, 不包含后缀, 不填写时为GUID</param>
+        /// <returns></returns>
+        public async Task<bool> DownloadAsync(string? path = null, string? filename = null)
+        {
+            var response = await GetOriginHttpResponse(HttpMethod.Get);
+
+            if (!response.IsSuccessStatusCode) return false;
+
+            using var stream = await response.Content.ReadAsStreamAsync();
+
+            string extension = Path.GetExtension(response.RequestMessage.RequestUri.ToString());
+
+            if (!string.IsNullOrWhiteSpace(path))
+            {
+                if (Directory.Exists(path))
+                {
+                    try
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                }
+            }
+
+            using var fs = new FileStream($"{path ?? Directory.GetCurrentDirectory()}/{filename ?? Guid.NewGuid().ToString()}{extension}", FileMode.CreateNew);
+            await stream.CopyToAsync(fs);
+
+            return true;
+        }
+
+        public bool Download(string? path = null, string? filename = null)
+        {
+            return DownloadAsync(path, filename).GetAwaiter().GetResult();
+        }
     }
 }

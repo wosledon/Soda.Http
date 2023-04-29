@@ -132,5 +132,14 @@ namespace Soda.Http.Test
 
             _testOutputHelper.WriteLine(res?.ToJson());
         }
+
+        [Fact]
+        public async Task DownloadAsync()
+        {
+            var result = await QSodaHttp.Url("https://cdn.bootcdn.net/ajax/libs/react/18.2.0/cjs/react.development.js")
+                .DownloadAsync(filename: "react");
+
+            Assert.True(result);
+        }
     }
 }
