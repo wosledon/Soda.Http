@@ -1,5 +1,8 @@
 # Soda.Http
 
+[![NuGet version (Soda.Http)](https://img.shields.io/nuget/v/Soda.Http.svg)](https://www.nuget.org/packages/Soda.Http/)
+[![NuGet downloads (Soda.Http)](https://img.shields.io/nuget/dt/Soda.Http.svg)](https://www.nuget.org/packages/Soda.Http/) 
+
 基于`HttpClient`封装的 Http 请求库。**如果有什么好想法，可以提 Issue 或者 Pr。**
 
 * 2023/04/30 新增`Download/DownloadAsync`方法支持文件下载
